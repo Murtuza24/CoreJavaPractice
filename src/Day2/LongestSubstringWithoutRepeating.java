@@ -8,16 +8,22 @@ public class LongestSubstringWithoutRepeating {
         System.out.println("Enter String: ");
         Scanner scanner = new Scanner(System.in);
         String str = scanner.nextLine();
-        System.out.println("Max Len: "+getLongestSubstring(str));
+        System.out.println("Longest Substring: "+getLongestSubstring(str));
     }
 
-    private static int getLongestSubstring(String str) {
+    private static String getLongestSubstring(String str) {
+//        We maintain a hashset to keep record of seen chars so far.
+//        if char repeats then the hashset is reset/cleared and the max length
+//        is updated in the maxSub variable and the longest substring is updated in a StringBuilder variable.
+
         HashSet<Character> characterHashSet = new HashSet<Character>();
         int maxSub = 0;
-        String longest = "";
+        String output = "";
+        StringBuilder longest = new StringBuilder();
         for (int low = 0; low < str.length(); low++){
             characterHashSet.add(str.charAt(low));
-            int high = low+1;
+            longest.append(str.charAt(low));
+            int high = low + 1;
             int count = 1;
             while(high < str.length()){
                 System.out.println(characterHashSet.toString());
@@ -28,12 +34,20 @@ public class LongestSubstringWithoutRepeating {
                     break;
                 } else{
                     characterHashSet.add(str.charAt(high));
+                    longest.append(str.charAt(high));
                     count++;
                     high++;
                 }
             }
+
+            if (longest.length() > output.length()){
+                output = longest.toString();
+
+            }
+            longest = new StringBuilder();
             maxSub = Math.max(maxSub, count);
         }
-        return maxSub;
+        System.out.println("Max Len: "+maxSub);
+        return output;
     }
 }
