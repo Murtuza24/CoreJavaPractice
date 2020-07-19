@@ -11,7 +11,7 @@ public class Login {
     private static Connection con = SQLConnection.getDBConnection();
     private static Statement st = null;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         boolean cont = true;
 
         System.out.println(ZonedDateTime.now());
@@ -35,6 +35,7 @@ public class Login {
                     viewProfile();
                 case 5:
                     cont = false;
+                    con.close();
                     break;
 
                 default:

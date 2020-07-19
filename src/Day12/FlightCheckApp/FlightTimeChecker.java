@@ -43,7 +43,7 @@ public class FlightTimeChecker {
 //            System.out.println(fl.getStartingPoint());
 //        }
 
-        filteredFlights.forEach(fDetails -> System.out.println(FlightDetails.getStartingPoint()));
+        filteredFlights.forEach(fDetails -> System.out.println(fDetails.getStartingPoint()));
     }
 
     private static void setFlightsData() {
