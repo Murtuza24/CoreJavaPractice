@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class SortingFiles {
 
@@ -40,7 +41,29 @@ public class SortingFiles {
 
         System.out.println(filesList);
         for (File file : filesList) {
-            System.out.println(file.getName());
+            System.out.println(file.length() / (1024 * 1024));
         }
+
+        System.out.println("------Sorted By File Name Ascending Order-------");
+        filesList = filesList.stream().sorted((f1, f2) -> (f1.getName()).compareTo(f2.getName()))
+                .collect(Collectors.toList());
+        filesList.forEach(file -> System.out.println(file.getName()));
+
+        System.out.println("------Sorted By File Name Descending Order-------");
+        filesList = filesList.stream().sorted((f1, f2) -> (f2.getName()).compareTo(f1.getName()))
+                .collect(Collectors.toList());
+        filesList.forEach(file -> System.out.println(file.getName()));
+
+
+        System.out.println("------Sorted By File Type Ascending Order-------");
+        filesList = filesList.stream().sorted((f1, f2) -> (f1.getName().split("\\.")[1]).compareTo(f2.getName().split("\\.")[1]))
+                .collect(Collectors.toList());
+        filesList.forEach(file -> System.out.println(file.getName()));
+
+        System.out.println("------Sorted By File Type Descending Order-------");
+        filesList = filesList.stream().sorted((f1, f2) -> (f2.getName().split("\\.")[1]).compareTo(f1.getName().split("\\.")[1]))
+                .collect(Collectors.toList());
+        filesList.forEach(file -> System.out.println(file.getName()));
+
     }
 }
