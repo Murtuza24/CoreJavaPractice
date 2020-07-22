@@ -41,7 +41,7 @@ public class SortingFiles {
 
         System.out.println(filesList);
         for (File file : filesList) {
-            System.out.println(file.length() / (1024 * 1024));
+            System.out.println(file.getName());
         }
 
         System.out.println("------Sorted By File Name Ascending Order-------");
