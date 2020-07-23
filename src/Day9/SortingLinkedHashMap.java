@@ -17,9 +17,16 @@ public class SortingLinkedHashMap {
         System.out.println(linkedHashMap);
 
 
+        List<String> keys = new ArrayList(linkedHashMap.keySet());
+        Collections.sort(keys);
+
+
+        System.out.println("-------------Sorting using stream API------------------------");
         linkedHashMap = linkedHashMap.entrySet().stream().sorted((k1, k2) -> k1.getKey().compareTo(k2.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
                         (e1, e2) -> e2, LinkedHashMap::new));
+
+
 
 
         System.out.println("-------------Sorted------------------------");
