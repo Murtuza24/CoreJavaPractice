@@ -6,27 +6,53 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class GenericListMapConcurrency {
 
-    static HashMap<String, List<Product>> productByCategoryMap = new HashMap<String, List<Product>>();
+    static ConcurrentHashMap<String, List<Product>> productByCategoryMap = new ConcurrentHashMap<String, List<Product>>();
 
     public static void main(String[] args) throws IOException {
         getProductsData("ProductsByCategory.txt");
 
 
         addingByThreads();
-//        removeProductFromMap();
+        removingByThreads();
 
     }
 
-    private static void removeProductFromMap() {
-        String Key = "Phones";
-        String val = "Samsung J9";
+    private static void removingByThreads() {
+
+        Thread rt1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                removeProductFromMap("Phones", "Samsung J9");
+            }
+        });
+        rt1.start();
+
+        Thread rt2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                removeProductFromMap("Phones", "Samsung S9");
+            }
+        });
+        rt2.start();
+
+    }
+
+    private static void removeProductFromMap(String k, String v) {
+        String Key = k;
+        String val = v;
 
         List<Product> products = productByCategoryMap.get(Key);
         products.removeIf(prod -> prod.getName().equals(val));
 
+
+        System.out.println("--------------------After Removing------------------------");
+        productByCategoryMap.forEach((s, prods) ->
+                prods.forEach(product -> System.out.println(s + " (" + prods.size() + ") " + product.getName())));
+        System.out.println("--------------------------------------------");
 
     }
 
@@ -84,7 +110,7 @@ public class GenericListMapConcurrency {
             }
         }
         productByCategoryMap.forEach((s, products) ->
-                products.forEach(product -> System.out.println(s + " ("+products.size()+") "+product.getName())));
+                products.forEach(product -> System.out.println(s + " (" + products.size() + ") " + product.getName())));
         System.out.println("--------------------------------------------");
     }
 
